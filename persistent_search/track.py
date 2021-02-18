@@ -8,13 +8,14 @@ def persistent_search(es, params):
 
 async def persistent_search_async(es, params):
     index = params.get("index")
+    poll_interval = params.get("poll_interval", 0.001)
     response = await es.transport.perform_request("POST", "/_persistent_search/", body=params.get("body", "{}"))
     while True:
         try:
             response = await es.transport.perform_request("GET", _make_path("_persistent_search", response["id"]))
             return
         except Exception as e:
-            await asyncio.sleep(1)
+            await asyncio.sleep(poll_interval)
 
 
 def register(registry):
