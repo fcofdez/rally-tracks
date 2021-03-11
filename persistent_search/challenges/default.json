@@ -60,7 +60,20 @@
           "name": "Execute persistent search agg",
           "operation": "persistent-hourly-agg",
           "iterations": 1000,
+          "warmup-iterations": 1,
           "poll-interval": 0.01,
+          "assertions": [
+            {
+              "property": "hits",
+              "condition": ">",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "name": "Execute regular search agg",
+          "operation": "regular-search-hourly-agg",
+          "iterations": 1000,
           "assertions": [
             {
               "property": "hits",
@@ -76,8 +89,8 @@
           "poll-interval": 0.01
         },
         {
-          "name": "Execute regular search agg",
-          "operation": "regular-search-hourly-agg",
+          "name": "Execute regular search agg with range",
+          "operation": "regular-search-hourly-agg-range",
           "iterations": 1000,
           "assertions": [
             {

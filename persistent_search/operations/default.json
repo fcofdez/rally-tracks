@@ -61,6 +61,30 @@
       }
     },
     {
+      "name": "regular-search-hourly-agg-range",
+      "operation-type": "search",
+      "index": "logs-*",
+      "body": {
+        "size": 0,
+        "query": {
+          "range": {
+            "@timestamp": {
+              "gte": "now-{{'15-05-1998' | days_ago(now)}}d/d",
+              "lt": "now/d"
+            }
+          }
+        },
+        "aggs": {
+          "by_hour": {
+            "date_histogram": {
+              "field": "@timestamp",
+              "calendar_interval": "hour"
+            }
+          }
+        }
+      }
+    },
+    {
       "name": "persistent-hourly-agg-range",
       "operation-type": "persistent-search",
       "index": "logs-*",
